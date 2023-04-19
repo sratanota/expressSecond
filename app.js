@@ -18,9 +18,13 @@ app.get('/', (req, res) => {
   res.send('Hello World!')
 })
 
+app.post('/', (req, res) => {
+  res.send('Post request Hello World!')
+})
+
 app.get('/cat', (req, res) => {
-  const {color, region} = req.query;
-  res.send('We are doing the Cat page for color = '+color + ' and region = ' + region)
+  const { color, region } = req.query;
+  res.send('We are doing the Cat page for color = ' + color + ' and region = ' + region)
 })
 
 app.get('/cat/:subPath', (req, res) => {
@@ -33,17 +37,44 @@ app.get('/cat/:subPath/:nextSubPath', (req, res) => {
   res.send(`Accept Cat ${subPath} Sub Request. and ${nextSubPath}`)
 })
 
-app.get('/students', (req, res) =>{
-   db.any('select * from public.student')
-   .then ((data)=>{
-       console.log('all student: ', data)
-       res.json(data)
-   })
-   .catch((error)=>{ 
-    console.log('ERROR:', error)
-    res.send("ERROR: can't get data")
-   })
+app.get('/students', (req, res) => {
+  db.any('select * from public.student')
+    .then((data) => {
+      console.log('all student: ', data)
+      res.json(data)
+    })
+    .catch((error) => {
+      console.log('ERROR:', error)
+      res.send("ERROR: can't get data")
+    })
 })
+
+app.get('/students/:id', (req, res) => {
+  const { id } = req.params;
+  db.any('select * from public.student where "id" = $1', id)
+    .then((data) => {
+      console.log('all student: ', data)
+      res.json(data)
+    })
+    .catch((error) => {
+      console.log('ERROR:', error)
+      res.send("ERROR: can't get data")
+    })
+})
+
+app.post('/student', (req, res) => {
+  console.log('Got body:', req.body);
+  const { id } = req.body;
+  db.any('select * from public.student where "id" = $1', id)
+    .then((data) => {
+      console.log('DATA:', data)
+      res.json(data)
+    })
+    .catch((error) => {
+      console.log('ERROR:', error)
+      res.send("ERROR:Can't get data")
+    })
+});
 
 app.get('/c*', (req, res) => {
   res.send('get in path c*')
