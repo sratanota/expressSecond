@@ -1,10 +1,13 @@
 const express = require("express");
 const app = express();
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 4000;
 
 const pgp = require('pg-promise')(/* options */)
 const db = pgp('postgres://db_486example_user:9N2KSOdKB4W8CADTodmTWPjhp2Ks7Riw@dpg-cggkfk02qv28tc48fmk0-a/db_486example')
 
+const top3Course= [{code:"DT160",cname:"C programming",description:"Dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever sin"},
+        {code:"DT161",cname:"C++ programming",description:"Dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever sin"},
+        {code:"DT261",cname:"Data Structures",description:"Dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever sin"}]
 
 const bodyParser = require('body-parser')
 app.use(bodyParser.json())
@@ -35,6 +38,11 @@ app.get('/cat/:subPath', (req, res) => {
 app.get('/cat/:subPath/:nextSubPath', (req, res) => {
   const { subPath, nextSubPath } = req.params;
   res.send(`Accept Cat ${subPath} Sub Request. and ${nextSubPath}`)
+})
+
+app.get('/top3',(req,res)=>{
+  //should fetch data from db
+  res.json({"result":top3Course})
 })
 
 app.get('/students', (req, res) => {
