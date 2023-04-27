@@ -87,13 +87,13 @@ app.post('/login',(req, res) => {
   db.any('select email, password from public.student where email = $1 and password = $2',user.email, user.password)
   .then((data) => {
     if (data.length === 0){
-      return res.status(401).send("Login Fail.")
+      return res.status(401).send("Login Fail." + user.email + " " + user.password)
     }
     const access_token = generateToken(user)
     res.json({token:access_token})
   })
   .catch((error) => {
-    return res.status(401).send("Login Fail.")
+    return res.status(401).send("Login error.")
   })
 })
 
