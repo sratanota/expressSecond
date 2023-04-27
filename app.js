@@ -84,7 +84,7 @@ const generateToken = (usr)=> {
 app.post('/login',(req, res) => {
   const {user} = req.body
 
-  db.any("select email, password from public.student where email = '$1' and password = '$2'",user.email, user.password)
+  db.any("select email, password from public.student where email = '"+user.email+"' and password = '"+user.password+'"')
   .then((data) => {
     if (data.length === 0){
       return res.status(401).send("Login Fail." + user.email + " " + user.password)
