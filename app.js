@@ -52,7 +52,7 @@ app.get('/cat/:subPath/:nextSubPath', (req, res) => {
 app.get('/top3', (req, res) => {
   db.any('select * from public.course order by code limit 3')
     .then((data) => {
-      res.json(data)
+      res.json({result:data})
     })
     .catch((error) => {
       console.log('ERROR:', error)
@@ -63,7 +63,7 @@ app.get('/top3', (req, res) => {
 app.get('/courseList', (req, res) => {
   db.any('select * from public.course order by code')
     .then((data) => {
-      res.json(data)
+      res.json({result:data})
     })
     .catch((error) => {
       console.log('ERROR:', error)
