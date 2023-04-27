@@ -109,7 +109,7 @@ const validateToken = (req, res, next)=>{
     }
   })
 }
-app.post('myCourses', validateToken ,(req,res) =>{
+app.post('/myCourses', validateToken ,(req,res) =>{
   const {email} = req.body
   console.log("email",email)
   const queryString = `select  co.coursecode, course.description, sem.semester, sem.year  from studentenrollment as se join student s on se.studentid = s.id 
