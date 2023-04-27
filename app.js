@@ -93,7 +93,7 @@ app.post('/login',(req, res) => {
     res.json({token:access_token})
   })
   .catch((error) => {
-    return res.status(401).send("Login error.")
+    return res.status(401).send("Login error." + error.message)
   })
 })
 
