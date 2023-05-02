@@ -4,8 +4,8 @@ const cors = require('cors');
 const port = process.env.PORT || 4000;
 
 const pgp = require('pg-promise')(/* options */)
-//const db = pgp('postgres://db_63360500408_dtwebapp_user:9tC8Mlncl9boctgApt2eNWhVkkM7dBfS@dpg-cghvpr2k728s1bqu1fsg-a/db_63360500408_dtwebapp')
-const db = pgp('postgres://db_486example_user:9N2KSOdKB4W8CADTodmTWPjhp2Ks7Riw@dpg-cggkfk02qv28tc48fmk0-a/db_486example')
+const db = pgp('postgres://db_63360500408_dtwebapp_user:9tC8Mlncl9boctgApt2eNWhVkkM7dBfS@dpg-cghvpr2k728s1bqu1fsg-a/db_63360500408_dtwebapp')
+//const db = pgp('postgres://db_486example_user:9N2KSOdKB4W8CADTodmTWPjhp2Ks7Riw@dpg-cggkfk02qv28tc48fmk0-a/db_486example')
 
 const topCourse =[{code:"DT160",cname:"C programming",description:" dummy text of the printing"},
                   {code:"DT161",cname:"C++ programming",description:" dummy text of the printing"},
