@@ -7,7 +7,8 @@ const jwt = require('jsonwebtoken')
 const SECRET = "mysecretword"
 
 const pgp = require('pg-promise')(/* options */)
-const db = pgp('postgres://db_486example_user:9N2KSOdKB4W8CADTodmTWPjhp2Ks7Riw@dpg-cggkfk02qv28tc48fmk0-a/db_486example')
+//const db = pgp('postgres://db_486example_user:9N2KSOdKB4W8CADTodmTWPjhp2Ks7Riw@dpg-cggkfk02qv28tc48fmk0-a/db_486example')
+const db = pgp('postgres://db_486example_user:9N2KSOdKB4W8CADTodmTWPjhp2Ks7Riw@dpg-cggkfk02qv28tc48fmk0-a.singapore-postgres.render.com/db_486example?ssl=true')
 const top3Course = [{ code: "DT160", cname: "C programming", description: "Dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever sin" },
 { code: "DT161", cname: "C++ programming", description: "Dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever sin" },
 { code: "DT261", cname: "Data Structures", description: "Dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever sin" }]
@@ -68,6 +69,7 @@ app.get('/top3', (req, res) => {
 app.get('/courseList', (req, res) => {
   db.any('select * from public.course order by code')
     .then((data) => {
+      console.log("Sending Data");
       res.json({result:data})
     })
     .catch((error) => {
@@ -118,6 +120,21 @@ app.post('/myCourses', validateToken ,(req,res) =>{
   left join semester as sem on co.semid = sem.semid
   where s.email = $1`
   db.any(queryString,email)
+    .then((data) => {
+      res.json({result:data})
+    })
+    .catch((error) => {
+      console.log('ERROR:', error)
+      res.send("ERROR: can't get data")
+    })  
+})
+
+app.post('/addcourse' ,(req,res) =>{
+  const {course} = req.body
+  console.log("course",course)
+  const queryString = `insert into course (code,ctype,cname,description,image) values 
+  ($1,'major',$2,$3,$4)`
+  db.any(queryString,[course.code,course.name,course.description,course.image])
     .then((data) => {
       res.json({result:data})
     })
